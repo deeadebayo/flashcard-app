@@ -1,31 +1,76 @@
 import React, { useEffect, useState } from 'react';
-import StudyCard from '../Study/StudyCard';
-import { useRouteMatch, useParams, Link } from 'react-router-dom';
+import { useRouteMatch, useParams, Link, useHistory } from 'react-router-dom';
 import { readDeck } from '../../utils/api';
 
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import DeckStudyCard from './DeckStudyCard';
 
-const breadcrumbStyle = css`
-	li > * {
+const studyPageStyle = css`
+	ul li > * {
 		margin-right: 0.75em;
+	}
+	padding-bottom: 3em;
+
+	.card-text {
+		max-width: 60ch;
+		font-size: 1.2em;
+	}
+
+	button {
+		margin-right: 2em;
 	}
 `;
 
 const DeckStudy = () => {
+	const history = useHistory();
 	const { deckId } = useParams();
-	const { path, url } = useRouteMatch();
-	console.log(path, url);
+	const { url } = useRouteMatch();
 	const [studyDeck, setStudyDeck] = useState([]);
+	const [currentCard, setCurrentCard] = useState({
+		index: 0,
+		visible: 'front',
+	});
 
 	useEffect(() => {
 		setStudyDeck([]);
 		readDeck(deckId).then(setStudyDeck);
 	}, [deckId]);
 
+	const handleCardFlip = () => {
+		currentCard.visible === 'front'
+			? setCurrentCard({ ...currentCard, visible: 'back' })
+			: setCurrentCard({ ...currentCard, visible: 'front' });
+		if (currentCard.index === studyDeck?.cards?.length - 1) {
+			console.log(currentCard);
+			setCurrentCard({ ...currentCard, visible: 'back' });
+			(() => {
+				if (
+					window.confirm(
+						`Restart cards?\n Click Cancel to resturn to the Home Screen`
+					)
+				) {
+					setCurrentCard({
+						visible: 'front',
+						index: 0,
+					});
+				} else {
+					history.push('/');
+				}
+			})();
+		}
+	};
+	const handleNextCard = () => {
+		if (currentCard.index < studyDeck?.cards?.length - 1)
+			setCurrentCard({
+				visible: 'front',
+				index: currentCard.index + 1,
+			});
+	};
+
 	return (
-		<>
-			<ul className='breadcrumb border' css={breadcrumbStyle}>
+		<div css={studyPageStyle}>
+			<ul className='breadcrumb border'>
 				<li>
 					<Link to='/'>🏠 Home</Link>
 				</li>
@@ -35,8 +80,13 @@ const DeckStudy = () => {
 				<li>📖 Study</li>
 			</ul>
 			<h1>Study: {studyDeck.name}</h1>
-			<StudyCard />
-		</>
+			<DeckStudyCard
+				currentCard={currentCard}
+				studyDeck={studyDeck}
+				handleNextCard={handleNextCard}
+				handleCardFlip={handleCardFlip}
+			/>
+		</div>
 	);
 };
 
