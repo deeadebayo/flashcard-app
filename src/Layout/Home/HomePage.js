@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
-import DeckList from './Decks/DeckList';
+import HomeDeckList from './HomeDeckList';
 
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ const deckListContainer = css`
 	}
 `;
 
-const Home = () => (
+const HomePage = ({ decks, handleDeleteDeck }) => (
 	<div css={deckListContainer}>
 		<Link to='./decks/new'>
 			<button className='btn-success' title='make a new deck'>
@@ -21,9 +21,9 @@ const Home = () => (
 			</button>
 		</Link>
 		<div className='child-borders'>
-			<DeckList />
+			<HomeDeckList decks={decks} handleDeleteDeck={handleDeleteDeck} />
 		</div>
 	</div>
 );
 
-export default Home;
+export default HomePage;

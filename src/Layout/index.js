@@ -1,32 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './Header';
-import Home from './Home';
+import HomePage from './Home/HomePage';
+import DecksPage from './Decks/DecksPage';
 import NotFound from './NotFound';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 
 import '../../node_modules/papercss/dist/paper.min.css';
-import DeckNew from './Decks/DeckNew';
-import StudyPage from './Study/StudyPage';
-import DeckPage from './Decks/DeckPage';
+import { deleteDeck, listDecks } from '../utils/api';
 
 function Layout() {
+	const [decks, setDecks] = useState([]);
+	const history = useHistory();
+	const handleDeleteDeck = (deckToDelete) => {
+		if (window.confirm(`You really want to delete this deck?`))
+			deleteDeck(deckToDelete).then(setDecks);
+		history.push('/');
+	};
+	useEffect(() => {
+		setDecks([]);
+		listDecks().then(setDecks);
+	}, []);
+
 	return (
 		<>
 			<Header />
-
 			<div className='container'>
 				<Switch>
 					<Route exact path='/'>
-						<Home />
+						<HomePage
+							decks={decks}
+							handleDeleteDeck={handleDeleteDeck}
+						/>
 					</Route>
-					<Route path='/decks/:deckId/study'>
-						<StudyPage />
-					</Route>
-					<Route path='/decks/new'>
-						<DeckNew />
-					</Route>
-					<Route path='/decks/:deckId'>
-						<DeckPage />
+					<Route path='/decks'>
+						<DecksPage decks={decks} />
 					</Route>
 					<Route>
 						<NotFound />
