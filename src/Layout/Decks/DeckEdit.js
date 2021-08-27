@@ -17,7 +17,7 @@ const newDeckPage = css`
 	}
 `;
 
-const DeckNew = ({ decks, addDeck }) => {
+const DeckEdit = ({ decks, addDeck }) => {
 	const initialFormState = {
 		name: '',
 		description: '',
@@ -74,4 +74,4 @@ const DeckNew = ({ decks, addDeck }) => {
 	);
 };
 
-export default DeckNew;
+export default DeckEdit;

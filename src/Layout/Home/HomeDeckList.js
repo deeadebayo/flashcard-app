@@ -56,7 +56,7 @@ const HomeDeckInfo = ({ deck, deckCards, handleDeleteDeck }) => {
 const HomeDeckList = ({ decks = [], handleDeleteDeck }) => {
 	return (
 		<>
-			{decks.map((deck) => (
+			{decks?.map((deck) => (
 				<HomeDeckInfo
 					deck={deck}
 					key={deck.id}

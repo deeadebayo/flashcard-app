@@ -2,19 +2,21 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import CardPage from '../Cards/CardPage';
 import NotFound from '../NotFound';
+import DeckEdit from './DeckEdit';
 
 import DeckNew from './DeckNew';
-import DeckPageInfo from './DeckPageInfo';
+import DeckPage from './DeckPage';
 import DeckStudy from './DeckStudy';
 
-const DeckPage = ({ decks }) => {
+const DeckRoutes = ({ decks, addDeck }) => {
+	const deckLength = decks.length;
 	return (
 		<Switch>
 			<Route path='/decks/new'>
-				<DeckNew />
+				<DeckNew decks={decks} addDeck={addDeck} whatId={deckLength} />
 			</Route>
 			<Route exact path='/decks/:deckId'>
-				<DeckPageInfo />
+				<DeckPage />
 			</Route>
 			<Route path='/decks/:deckId/cards'>
 				<CardPage />
@@ -22,7 +24,9 @@ const DeckPage = ({ decks }) => {
 			<Route path='/decks/:deckId/study'>
 				<DeckStudy />
 			</Route>
-			<Route path='/decks/:deckId/edit'>Edit Deck</Route>
+			<Route path='/decks/:deckId/edit'>
+				<DeckEdit />
+			</Route>
 			<Route>
 				<NotFound />
 			</Route>
@@ -30,4 +34,4 @@ const DeckPage = ({ decks }) => {
 	);
 };
 
-export default DeckPage;
+export default DeckRoutes;

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import HomePage from './Home/HomePage';
-import DecksPage from './Decks/DecksPage';
 import NotFound from './NotFound';
 import { Switch, Route, useHistory } from 'react-router-dom';
 
 import '../../node_modules/papercss/dist/paper.min.css';
-import { deleteDeck, listDecks } from '../utils/api';
+import { deleteDeck, listDecks, createDeck } from '../utils/api';
+import DeckRoutes from './Decks/DeckRoutes';
 
 function Layout() {
 	const [decks, setDecks] = useState([]);
@@ -15,6 +15,10 @@ function Layout() {
 		if (window.confirm(`You really want to delete this deck?`))
 			deleteDeck(deckToDelete).then(setDecks);
 		history.push('/');
+	};
+	const handleAddDeck = (deckToAdd) => {
+		createDeck(deckToAdd);
+		listDecks().then(setDecks);
 	};
 	useEffect(() => {
 		setDecks([]);
@@ -33,7 +37,7 @@ function Layout() {
 						/>
 					</Route>
 					<Route path='/decks'>
-						<DecksPage decks={decks} />
+						<DeckRoutes decks={decks} addDeck={handleAddDeck} />
 					</Route>
 					<Route>
 						<NotFound />
