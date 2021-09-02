@@ -43,7 +43,7 @@ const HomeDeckInfo = ({ deck, deckCards, handleDeleteDeck }) => {
 						to='/'
 						className='delete card-link paper-btn btn-danger'
 						title='delete this deck'
-						onClick={() => handleDeleteDeck(deck.id)}
+						onClick={() => handleDeleteDeck(id)}
 					>
 						❌
 					</Link>
@@ -53,19 +53,17 @@ const HomeDeckInfo = ({ deck, deckCards, handleDeleteDeck }) => {
 	);
 };
 
-const HomeDeckList = ({ decks = [], handleDeleteDeck }) => {
-	return (
-		<>
-			{decks?.map((deck) => (
-				<HomeDeckInfo
-					deck={deck}
-					key={deck.id}
-					deckCards={deck.cards}
-					handleDeleteDeck={handleDeleteDeck}
-				/>
-			))}
-		</>
-	);
-};
+const HomeDeckList = ({ decks = [], handleDeleteDeck }) => (
+	<>
+		{decks.map((deck) => (
+			<HomeDeckInfo
+				deck={deck}
+				key={deck.id}
+				deckCards={deck.cards}
+				handleDeleteDeck={handleDeleteDeck}
+			/>
+		))}
+	</>
+);
 
 export default HomeDeckList;

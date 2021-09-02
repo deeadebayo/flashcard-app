@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import CardPage from '../Cards/CardPage';
+import CardRoutes from '../Cards/CardRoutes';
 import NotFound from '../NotFound';
 import DeckEdit from './DeckEdit';
 
@@ -9,17 +9,16 @@ import DeckPage from './DeckPage';
 import DeckStudy from './DeckStudy';
 
 const DeckRoutes = ({ decks, addDeck }) => {
-	const deckLength = decks.length;
 	return (
 		<Switch>
 			<Route path='/decks/new'>
-				<DeckNew decks={decks} addDeck={addDeck} whatId={deckLength} />
+				<DeckNew addDeck={addDeck} />
 			</Route>
 			<Route exact path='/decks/:deckId'>
 				<DeckPage />
 			</Route>
 			<Route path='/decks/:deckId/cards'>
-				<CardPage />
+				<CardRoutes />
 			</Route>
 			<Route path='/decks/:deckId/study'>
 				<DeckStudy />

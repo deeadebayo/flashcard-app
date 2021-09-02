@@ -1,14 +1,18 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import NotFound from '../NotFound';
+import CardEdit from './CardEdit';
+import CardNew from './CardNew';
 
-const CardPage = () => {
+const CardRoutes = () => {
 	return (
 		<Switch>
 			<Route exact path='/decks/:deckId/cards/new'>
-				New Card
+				<CardNew />
 			</Route>
-			<Route path='/decks/:deckId/cards/:cardId/edit'>Edit card</Route>
+			<Route path='/decks/:deckId/cards/:cardId/edit'>
+				<CardEdit />
+			</Route>
 			<Route>
 				<NotFound />
 			</Route>
@@ -16,4 +20,4 @@ const CardPage = () => {
 	);
 };
 
-export default CardPage;
+export default CardRoutes;

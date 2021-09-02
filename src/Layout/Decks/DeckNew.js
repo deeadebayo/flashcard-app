@@ -17,7 +17,7 @@ const newDeckPage = css`
 	}
 `;
 
-const DeckNew = ({ decks, addDeck }) => {
+const DeckNew = ({ addDeck }) => {
 	const initialFormState = {
 		name: '',
 		description: '',
@@ -32,7 +32,6 @@ const DeckNew = ({ decks, addDeck }) => {
 	const handleFormSubmit = (event) => {
 		event.preventDefault();
 		addDeck(formData);
-		history.push(`${decks[decks.length - 1].id}`);
 	};
 
 	return (
@@ -43,6 +42,7 @@ const DeckNew = ({ decks, addDeck }) => {
 				</li>
 				<li>Create Deck</li>
 			</ul>
+			<h2>Create Deck</h2>
 			<div className='form-group'>
 				<form onSubmit={handleFormSubmit}>
 					<label htmlFor='name'>Name</label>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useHistory } from 'react-router-dom';
 
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import DeckPageCardList from './DeckPageCardList';
-import { readDeck } from '../../utils/api';
+import { deleteCard, readDeck } from '../../utils/api';
 const deckPageStyle = css`
 	ul li > * {
 		margin-right: 0.75em;
@@ -27,6 +27,12 @@ const deckPageStyle = css`
 const DeckPage = () => {
 	const { deckId } = useParams();
 	const [thisDeck, setThisDeck] = useState({});
+	const history = useHistory();
+
+	const handleCardDelete = (cardToDelete) => {
+		if (window.confirm(`You really want to delete this card?`))
+			deleteCard(cardToDelete).then(() => history.go(0));
+	};
 
 	useEffect(() => {
 		setThisDeck({});
@@ -64,7 +70,10 @@ const DeckPage = () => {
 					<div className='card-link paper-btn btn-danger'>❌</div>
 				</div>
 			</div>
-			<DeckPageCardList deckCards={cards} />
+			<DeckPageCardList
+				deckCards={cards}
+				handleCardDelete={handleCardDelete}
+			/>
 		</div>
 	);
 };

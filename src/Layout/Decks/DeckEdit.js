@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useHistory, useParams } from 'react-router-dom';
 
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { readDeck, updateDeck } from '../../utils/api';
 const newDeckPage = css`
 	ul li > * {
 		margin-right: 0.75em;
@@ -17,22 +18,23 @@ const newDeckPage = css`
 	}
 `;
 
-const DeckEdit = ({ decks, addDeck }) => {
-	const initialFormState = {
-		name: '',
-		description: '',
-	};
-	const [formData, setFormData] = useState({ ...initialFormState });
+const DeckEdit = () => {
+	const history = useHistory();
+	const { deckId } = useParams();
+
+	const [formData, setFormData] = useState({});
+
+	useEffect(() => {
+		readDeck(deckId).then(setFormData);
+	}, [deckId]);
+
 	const handleChange = ({ target }) => {
 		setFormData({ ...formData, [target.name]: target.value });
 	};
 
-	const history = useHistory();
-
 	const handleFormSubmit = (event) => {
 		event.preventDefault();
-		addDeck(formData);
-		history.push(`${decks[decks.length - 1].id}`);
+		updateDeck(formData).then(() => history.push('./'));
 	};
 
 	return (
@@ -41,8 +43,9 @@ const DeckEdit = ({ decks, addDeck }) => {
 				<li>
 					<Link to='/'>🏠 Home</Link>
 				</li>
-				<li>Create Deck</li>
+				<li>Editing Deck {deckId}</li>
 			</ul>
+			<h2>Edit Deck</h2>
 			<div className='form-group'>
 				<form onSubmit={handleFormSubmit}>
 					<label htmlFor='name'>Name</label>
@@ -51,7 +54,7 @@ const DeckEdit = ({ decks, addDeck }) => {
 						id='name'
 						name='name'
 						onChange={handleChange}
-						value={formData.name}
+						value={formData.name || ''}
 						className='input-block'
 						placeholder='Deck Name'
 					/>
@@ -61,12 +64,12 @@ const DeckEdit = ({ decks, addDeck }) => {
 						id='description'
 						name='description'
 						onChange={handleChange}
-						value={formData.description}
+						value={formData.description || ''}
 						className='input-block'
 						placeholder='Brief description of the deck'
 						rows='5'
 					/>
-					<button onClick={() => history.push('/')}>Cancel</button>
+					<button onClick={() => history.push('./')}>Cancel</button>
 					<button type='submit'>Submit</button>
 				</form>
 			</div>

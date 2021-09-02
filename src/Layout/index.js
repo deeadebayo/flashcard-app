@@ -11,17 +11,17 @@ import DeckRoutes from './Decks/DeckRoutes';
 function Layout() {
 	const [decks, setDecks] = useState([]);
 	const history = useHistory();
+
 	const handleDeleteDeck = (deckToDelete) => {
 		if (window.confirm(`You really want to delete this deck?`))
-			deleteDeck(deckToDelete).then(setDecks);
-		history.push('/');
+			deleteDeck(deckToDelete).then(() => history.go(0));
 	};
+
 	const handleAddDeck = (deckToAdd) => {
-		createDeck(deckToAdd);
-		listDecks().then(setDecks);
+		createDeck(deckToAdd).then((res) => history.push(`/decks/${res.id}`));
 	};
+
 	useEffect(() => {
-		setDecks([]);
 		listDecks().then(setDecks);
 	}, []);
 
