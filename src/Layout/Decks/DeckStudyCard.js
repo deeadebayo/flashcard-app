@@ -3,12 +3,13 @@ import { Link, useParams } from 'react-router-dom';
 
 const DeckStudyCardEmpty = ({ studyDeck }) => {
 	const { deckId } = useParams();
+	const amount = studyDeck?.cards?.length;
 	return (
 		<div>
 			<h2>Not enough cards.</h2>
 			<p>
-				You need at least 3 cards to study. There are only{' '}
-				{studyDeck?.cards?.length} card(s) in this deck.
+				You need at least 3 cards to study. There are only {amount}{' '}
+				cards in this deck.
 			</p>
 			<Link
 				to={`/decks/${deckId}/cards/new`}
@@ -27,7 +28,7 @@ const DeckStudyCard = ({
 	handleCardFlip,
 }) => {
 	if (studyDeck?.cards?.length < 3)
-		return <DeckStudyCardEmpty cardCount={studyDeck} />;
+		return <DeckStudyCardEmpty studyDeck={studyDeck} />;
 	return (
 		<div className='card'>
 			<div className='card-body'>
@@ -51,9 +52,9 @@ const DeckStudyCard = ({
 					<button
 						className='btn-secondary'
 						onClick={() => handleNextCard()}
-						disabled={
-							currentCard.index === studyDeck?.cards?.length - 1
-						}
+						// disabled={
+						// 	currentCard.index === studyDeck?.cards?.length - 1
+						// }
 					>
 						Next
 					</button>

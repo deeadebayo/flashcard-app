@@ -8,7 +8,7 @@ import DeckNew from './DeckNew';
 import DeckPage from './DeckPage';
 import DeckStudy from './DeckStudy';
 
-const DeckRoutes = ({ decks, addDeck }) => {
+const DeckRoutes = ({ addDeck }) => {
 	return (
 		<Switch>
 			<Route path='/decks/new'>

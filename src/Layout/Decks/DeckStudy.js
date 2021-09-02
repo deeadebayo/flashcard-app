@@ -33,7 +33,6 @@ const DeckStudy = () => {
 	});
 
 	useEffect(() => {
-		setStudyDeck([]);
 		readDeck(deckId).then(setStudyDeck);
 	}, [deckId]);
 
@@ -41,8 +40,14 @@ const DeckStudy = () => {
 		currentCard.visible === 'front'
 			? setCurrentCard({ ...currentCard, visible: 'back' })
 			: setCurrentCard({ ...currentCard, visible: 'front' });
+	};
+	const handleNextCard = () => {
+		if (currentCard.index < studyDeck?.cards?.length - 1)
+			setCurrentCard({
+				visible: 'front',
+				index: currentCard.index + 1,
+			});
 		if (currentCard.index === studyDeck?.cards?.length - 1) {
-			console.log(currentCard);
 			setCurrentCard({ ...currentCard, visible: 'back' });
 			(() => {
 				if (
@@ -59,13 +64,6 @@ const DeckStudy = () => {
 				}
 			})();
 		}
-	};
-	const handleNextCard = () => {
-		if (currentCard.index < studyDeck?.cards?.length - 1)
-			setCurrentCard({
-				visible: 'front',
-				index: currentCard.index + 1,
-			});
 	};
 
 	return (
