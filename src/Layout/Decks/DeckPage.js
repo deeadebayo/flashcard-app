@@ -24,7 +24,7 @@ const deckPageStyle = css`
 	}
 `;
 
-const DeckPage = () => {
+const DeckPage = ({ handleDeleteDeck }) => {
 	const { deckId } = useParams();
 	const [thisDeck, setThisDeck] = useState({});
 	const history = useHistory();
@@ -67,7 +67,14 @@ const DeckPage = () => {
 							</div>
 						</Link>
 					</div>
-					<div className='card-link paper-btn btn-danger'>❌</div>
+					<Link
+						to='/'
+						className='delete card-link paper-btn btn-danger'
+						title='delete this deck'
+						onClick={() => handleDeleteDeck(deckId)}
+					>
+						❌
+					</Link>
 				</div>
 			</div>
 			<DeckPageCardList

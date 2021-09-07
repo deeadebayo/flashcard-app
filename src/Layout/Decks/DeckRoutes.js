@@ -8,14 +8,14 @@ import DeckNew from './DeckNew';
 import DeckPage from './DeckPage';
 import DeckStudy from './DeckStudy';
 
-const DeckRoutes = ({ addDeck }) => {
+const DeckRoutes = ({ handleDeleteDeck }) => {
 	return (
 		<Switch>
 			<Route path='/decks/new'>
-				<DeckNew addDeck={addDeck} />
+				<DeckNew />
 			</Route>
 			<Route exact path='/decks/:deckId'>
-				<DeckPage />
+				<DeckPage handleDeleteDeck={handleDeleteDeck} />
 			</Route>
 			<Route path='/decks/:deckId/cards'>
 				<CardRoutes />

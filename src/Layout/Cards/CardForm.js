@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-const Form = ({ handleCardAction, initialFormState, url, isNew }) => {
+const CardForm = ({ handleCardAction, initialFormState, url, isOld }) => {
 	const history = useHistory();
 	const [formData, setFormData] = useState({ ...initialFormState });
 
@@ -11,7 +11,7 @@ const Form = ({ handleCardAction, initialFormState, url, isNew }) => {
 
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
-		!isNew
+		!isOld
 			? handleCardAction(formData).then(() =>
 					setFormData({ ...initialFormState })
 			  )
@@ -62,4 +62,4 @@ const Form = ({ handleCardAction, initialFormState, url, isNew }) => {
 	);
 };
 
-export default Form;
+export default CardForm;

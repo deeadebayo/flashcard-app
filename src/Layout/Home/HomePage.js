@@ -1,7 +1,6 @@
-/** @jsxImportSource @emotion/react */
 import React from 'react';
 import HomeDeckList from './HomeDeckList';
-
+/** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 

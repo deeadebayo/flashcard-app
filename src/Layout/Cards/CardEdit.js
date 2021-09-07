@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { readCard, readDeck, updateCard } from '../../utils/api';
-import Form from '../Form';
+import CardForm from './CardForm';
 
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
@@ -54,10 +54,10 @@ const CardEdit = () => {
 				<li>Edit Card {cardId}</li>
 			</ul>
 			<h3>Edit Card</h3>
-			<Form
+			<CardForm
 				handleCardAction={handleCardEdit}
 				initialFormState={cardData}
-				isNew={true}
+				isOld
 				url='../../'
 			/>
 		</div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useRouteMatch, useParams, Link, useHistory } from 'react-router-dom';
+import { useParams, Link, useHistory } from 'react-router-dom';
 import { readDeck } from '../../utils/api';
 
 /** @jsxImportSource @emotion/react */
@@ -25,7 +25,6 @@ const studyPageStyle = css`
 const DeckStudy = () => {
 	const history = useHistory();
 	const { deckId } = useParams();
-	const { url } = useRouteMatch();
 	const [studyDeck, setStudyDeck] = useState([]);
 	const [currentCard, setCurrentCard] = useState({
 		index: 0,
@@ -73,7 +72,7 @@ const DeckStudy = () => {
 					<Link to='/'>🏠 Home</Link>
 				</li>
 				<li>
-					<Link to={url}>📘 {studyDeck.name}</Link>
+					<Link to='./'>📘 {studyDeck.name}</Link>
 				</li>
 				<li>📖 Study</li>
 			</ul>

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import DeckForm from './DeckForm';
+import { createDeck } from '../../utils/api';
 const newDeckPage = css`
 	ul li > * {
 		margin-right: 0.75em;
@@ -17,21 +19,15 @@ const newDeckPage = css`
 	}
 `;
 
-const DeckNew = ({ addDeck }) => {
+const DeckNew = () => {
+	const history = useHistory();
 	const initialFormState = {
 		name: '',
 		description: '',
 	};
-	const [formData, setFormData] = useState({ ...initialFormState });
-	const handleChange = ({ target }) => {
-		setFormData({ ...formData, [target.name]: target.value });
-	};
 
-	const history = useHistory();
-
-	const handleFormSubmit = (event) => {
-		event.preventDefault();
-		addDeck(formData);
+	const handleDeckNew = (formData) => {
+		createDeck(formData).then((res) => history.push(`/decks/${res.id}`));
 	};
 
 	return (
@@ -43,33 +39,10 @@ const DeckNew = ({ addDeck }) => {
 				<li>Create Deck</li>
 			</ul>
 			<h2>Create Deck</h2>
-			<div className='form-group'>
-				<form onSubmit={handleFormSubmit}>
-					<label htmlFor='name'>Name</label>
-					<input
-						type='text'
-						id='name'
-						name='name'
-						onChange={handleChange}
-						value={formData.name}
-						className='input-block'
-						placeholder='Deck Name'
-					/>
-					<label htmlFor='description'>Description</label>
-					<textarea
-						type='text'
-						id='description'
-						name='description'
-						onChange={handleChange}
-						value={formData.description}
-						className='input-block'
-						placeholder='Brief description of the deck'
-						rows='5'
-					/>
-					<button onClick={() => history.push('/')}>Cancel</button>
-					<button type='submit'>Submit</button>
-				</form>
-			</div>
+			<DeckForm
+				handleDeckAction={handleDeckNew}
+				initialFormState={initialFormState}
+			/>
 		</div>
 	);
 };
