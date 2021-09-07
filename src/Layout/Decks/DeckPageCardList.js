@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { useRouteMatch } from 'react-router-dom';
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
@@ -39,29 +39,32 @@ const deckPageCardListStyle = css`
 		background: none;
 	}
 `;
-const DeckPageCard = ({ cardId, front, back, handleCardDelete }) => (
-	<div className='card' style={{ marginBottom: '2em' }}>
-		<div className='card-body'>
-			<div className='question card-text'>
-				<p>{front}</p>
-				<p>{back}</p>
-			</div>
-			<div className='btn-row'>
-				<Link to={`./cards/${cardId}/edit`}>
-					<div className='card-link paper-btn btn-primary '>
-						✏ Edit
+const DeckPageCard = ({ cardId, front, back, handleCardDelete }) => {
+	const { url } = useRouteMatch();
+	return (
+		<div className='card' style={{ marginBottom: '2em' }}>
+			<div className='card-body'>
+				<div className='question card-text'>
+					<p>{front}</p>
+					<p>{back}</p>
+				</div>
+				<div className='btn-row'>
+					<Link to={`${url}/cards/${cardId}/edit`}>
+						<div className='card-link paper-btn btn-primary '>
+							✏ Edit
+						</div>
+					</Link>
+					<div
+						onClick={() => handleCardDelete(cardId)}
+						className='delete card-link paper-btn btn-danger'
+					>
+						❌
 					</div>
-				</Link>
-				<div
-					onClick={() => handleCardDelete(cardId)}
-					className='delete card-link paper-btn btn-danger'
-				>
-					❌
 				</div>
 			</div>
 		</div>
-	</div>
-);
+	);
+};
 
 const DeckPageCardList = ({ deckCards, handleCardDelete }) => (
 	<div css={deckPageCardListStyle}>

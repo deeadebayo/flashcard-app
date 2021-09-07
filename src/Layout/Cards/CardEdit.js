@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { readCard, readDeck, updateCard } from '../../utils/api';
+import Form from '../Form';
 
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
@@ -23,32 +24,24 @@ const CardEdit = () => {
 	const history = useHistory();
 	const initialFormState = { front: '', back: '' };
 	const [currentDeck, setCurrentDeck] = useState({});
-	const [formData, setFormData] = useState({ ...initialFormState });
+	const [cardData, setCardData] = useState({ ...initialFormState });
 
-	const handleChange = ({ target }) => {
-		setFormData({ ...formData, [target.name]: target.value });
-	};
-
-	const handleFormSubmit = (e) => {
-		e.preventDefault();
+	const handleCardEdit = (formData) =>
 		updateCard(formData).then(() => history.push('../..'));
-	};
 
 	useEffect(() => {
 		readDeck(Number(deckId)).then(setCurrentDeck);
 	}, [deckId]);
 
 	useEffect(() => {
-		readCard(Number(cardId)).then(setFormData);
+		readCard(Number(cardId)).then(setCardData);
 	}, [cardId]);
 
 	return (
 		<div css={editCardPage}>
 			<ul className='breadcrumb border'>
 				<li>
-					<Link to='/' style={{ marginRight: '0.75em' }}>
-						🏠 Home
-					</Link>
+					<Link to='/'>🏠 Home</Link>
 				</li>
 				<li>
 					<Link
@@ -61,42 +54,12 @@ const CardEdit = () => {
 				<li>Edit Card {cardId}</li>
 			</ul>
 			<h3>Edit Card</h3>
-			<div className='form-group'>
-				<form onSubmit={handleFormSubmit}>
-					<label htmlFor='front'>Front</label>
-					<textarea
-						type='text'
-						id='front'
-						name='front'
-						onChange={handleChange}
-						value={formData.front || ''}
-						className='input-block'
-						placeholder='Front side of card'
-						rows='3'
-					/>
-					<br />
-					<label htmlFor='back'>Back</label>
-					<textarea
-						type='text'
-						id='back'
-						name='back'
-						onChange={handleChange}
-						value={formData.back || ''}
-						className='input-block'
-						placeholder='Back side of card'
-						rows='3'
-					/>
-					<button
-						className='btn-primary'
-						onClick={() => history.push('../..')}
-					>
-						Done
-					</button>
-					<button className='btn-secondary' type='submit'>
-						Save
-					</button>
-				</form>
-			</div>
+			<Form
+				handleCardAction={handleCardEdit}
+				initialFormState={cardData}
+				isNew={true}
+				url='../../'
+			/>
 		</div>
 	);
 };
