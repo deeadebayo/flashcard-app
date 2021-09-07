@@ -72,7 +72,7 @@ const DeckStudy = () => {
 					<Link to='/'>🏠 Home</Link>
 				</li>
 				<li>
-					<Link to='./'>📘 {studyDeck.name}</Link>
+					📘 <Link to='./'>{studyDeck.name}</Link>
 				</li>
 				<li>📖 Study</li>
 			</ul>

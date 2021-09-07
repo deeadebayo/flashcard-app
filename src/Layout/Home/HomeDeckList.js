@@ -18,9 +18,7 @@ const HomeDeckInfo = ({ deck, deckCards, handleDeleteDeck }) => {
 		<div className='card' style={{ marginBottom: '2em' }}>
 			<div className='card-body'>
 				<h4 className='card-title'>{name}</h4>
-				<h5 className='card-subtitle'>
-					{deckCards.length} cards in this deck
-				</h5>
+				<h5 className='card-subtitle'>{`${deckCards.length} cards`}</h5>
 				<p className='card-text'>{description}</p>
 				<div css={card__btnRow}>
 					<div>

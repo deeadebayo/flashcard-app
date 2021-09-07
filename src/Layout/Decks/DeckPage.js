@@ -46,7 +46,7 @@ const DeckPage = ({ handleDeleteDeck }) => {
 				<li>
 					<Link to='/'>🏠 Home</Link>
 				</li>
-				<li>{name}</li>
+				<li>📘 {name}</li>
 			</ul>
 			<div>
 				<h2>{name}</h2>

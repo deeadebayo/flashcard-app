@@ -36,9 +36,12 @@ const CardNew = () => {
 				<li>
 					<Link to='/'>🏠 Home</Link>
 				</li>
+				<li>
+					<Link to='./'>📘{currentDeck.name}</Link>
+				</li>
 				<li>Add Card</li>
 			</ul>
-			<h3>{currentDeck.name}: Add Card</h3>
+			<h3>{`${currentDeck.name}`}</h3>
 			<CardForm
 				handleCardAction={handleCreateCard}
 				initialFormState={initialFormState}
