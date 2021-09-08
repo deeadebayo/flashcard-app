@@ -37,7 +37,7 @@ const CardNew = () => {
 					<Link to='/'>🏠 Home</Link>
 				</li>
 				<li>
-					<Link to='./'>📘{currentDeck.name}</Link>
+					<Link to='./..'>📘{currentDeck.name}</Link>
 				</li>
 				<li>Add Card</li>
 			</ul>
